@@ -1,71 +1,85 @@
 
+import { useState } from 'react'
+import { ChevronDown, ChevronUp } from 'lucide-react'
 import { navigation } from '../data/portfolio'
 
 export default function SideNavigation({ activeSection }) {
+  const [expanded, setExpanded] = useState(false)
+
+  const currentItem =
+    navigation.find((item) => item.id === activeSection) ||
+    navigation[0]
+
+  const otherItems = navigation.filter(
+    (item) => item.id !== currentItem.id
+  )
 
   const scrollToSection = (sectionId) => {
     const target = document.getElementById(sectionId)
 
     if (!target) return
 
-    const isSlideMode = window.matchMedia(
-      '(max-width: 1024px)'
-    ).matches
+    const top =
+      target.getBoundingClientRect().top +
+      window.scrollY -
+      20
 
-    if (isSlideMode) {
-      const slider = document.getElementById('section-slider')
-      const panel = target.closest('.slide-panel')
-
-      if (!slider || !panel) return
-
-      const sliderRect = slider.getBoundingClientRect()
-      const panelRect = panel.getBoundingClientRect()
-
-      const nextPosition =
-        slider.scrollLeft +
-        panelRect.left -
-        sliderRect.left
-
-      slider.scrollTo({
-        left: nextPosition,
-        behavior: 'smooth',
-      })
-
-      return
-    }
-
-    target.scrollIntoView({
+    window.scrollTo({
+      top,
       behavior: 'smooth',
-      block: 'start',
     })
+
+    window.history.replaceState(
+      null,
+      '',
+      `#${sectionId}`
+    )
+
+    setExpanded(false)
   }
 
   return (
     <nav
-      className="side-navigation"
+      className={`navigation-dock ${
+        expanded ? 'is-open' : ''
+      }`}
       aria-label="Section navigation"
     >
-      {navigation.map((item) => {
-        const isActive = activeSection === item.id
+      {/* CURRENT NUMBER */}
+      <button
+        type="button"
+        className="navigation-current"
+        onClick={() => setExpanded((prev) => !prev)}
+        aria-expanded={expanded}
+        aria-label="Open section navigation"
+      >
+        <span>{currentItem.number}</span>
 
-        return (
+        {expanded ? (
+          <ChevronUp size={15} />
+        ) : (
+          <ChevronDown size={15} />
+        )}
+      </button>
+
+      {/* EXPANDABLE NUMBERS */}
+      <div
+        className="navigation-options"
+        aria-hidden={!expanded}
+      >
+        {otherItems.map((item) => (
           <button
             key={item.id}
             type="button"
+            className="navigation-option"
+            tabIndex={expanded ? 0 : -1}
             onClick={() => scrollToSection(item.id)}
-            className={`side-nav-item ${
-              isActive ? 'active' : ''
-            }`}
-            aria-label={`Go to ${item.label}`}
-            aria-current={
-              isActive ? 'location' : undefined
-            }
+            title={item.label}
           >
-            <span>{item.number}</span>
-            <small>{item.label}</small>
+            {item.number}
           </button>
-        )
-      })}
+        ))}
+      </div>
     </nav>
   )
 }

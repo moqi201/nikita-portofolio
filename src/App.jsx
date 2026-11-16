@@ -36,52 +36,15 @@ export default function App() {
       <main className="portfolio-frame">
 
         <div className="portfolio-content">
-
           <Topbar />
 
-          <div
-            className="section-slider"
-            id="section-slider"
-          >
+          <HeroSection />
+          <AboutSection />
+          <SkillsSection />
+          <ProjectsSection />
 
-            <div
-              className="slide-panel"
-              data-section-id="home"
-            >
-              <HeroSection />
-            </div>
-
-            <div
-              className="slide-panel"
-              data-section-id="about"
-            >
-              <AboutSection />
-            </div>
-
-            <div
-              className="slide-panel"
-              data-section-id="skills"
-            >
-              <SkillsSection />
-            </div>
-
-            <div
-              className="slide-panel"
-              data-section-id="projects"
-            >
-              <ProjectsSection />
-            </div>
-
-            <div
-              className="slide-panel"
-              data-section-id="writing"
-            >
-              <ArticlesSection />
-              <Footer />
-            </div>
-
-          </div>
-
+          <ArticlesSection />
+          <Footer />
         </div>
 
       </main>
