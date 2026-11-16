@@ -27,27 +27,65 @@ export default function App() {
   useReveal()
 
   return (
-  <div className="app-shell">
+    <div className="app-shell">
 
-    <SideNavigation
-      activeSection={activeSection}
-    />
+      <SideNavigation
+        activeSection={activeSection}
+      />
 
-    <main className="portfolio-frame">
+      <main className="portfolio-frame">
 
-      <div className="portfolio-content">
-        <Topbar />
+        <div className="portfolio-content">
 
-        <HeroSection />
-        <AboutSection />
-        <SkillsSection />
-        <ProjectsSection />
-        <ArticlesSection />
-        <Footer />
-      </div>
+          <Topbar />
 
-    </main>
+          <div
+            className="section-slider"
+            id="section-slider"
+          >
 
-  </div>
-)
+            <div
+              className="slide-panel"
+              data-section-id="home"
+            >
+              <HeroSection />
+            </div>
+
+            <div
+              className="slide-panel"
+              data-section-id="about"
+            >
+              <AboutSection />
+            </div>
+
+            <div
+              className="slide-panel"
+              data-section-id="skills"
+            >
+              <SkillsSection />
+            </div>
+
+            <div
+              className="slide-panel"
+              data-section-id="projects"
+            >
+              <ProjectsSection />
+            </div>
+
+            <div
+              className="slide-panel"
+              data-section-id="writing"
+            >
+              <ArticlesSection />
+              <Footer />
+            </div>
+
+          </div>
+
+        </div>
+
+      </main>
+
+    </div>
+  )
 }

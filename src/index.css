@@ -1909,45 +1909,254 @@ video {
     will-change: auto;
   }
 }
-/* TABLET & MOBILE FULL PAGE SCROLL */
 
+/* ========================================
+   HORIZONTAL SLIDER - TABLET & MOBILE
+======================================== */
+
+/* Desktop tetap vertical */
+.section-slider {
+  display: block;
+  width: 100%;
+}
+
+.slide-panel {
+  display: block;
+  width: 100%;
+}
+
+/* Tablet and mobile */
 @media (max-width: 1024px) {
-  html {
+
+  html,
+  body,
+  #root {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .app-shell {
+    width: 100%;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  .portfolio-frame {
+    width: 100%;
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .portfolio-content {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+
+    padding: 0;
+    overflow: hidden;
+  }
+
+  /* TOPBAR */
+  .topbar {
+    flex: 0 0 68px;
+    width: 100%;
+    min-height: 68px;
+    padding-inline: 22px;
+  }
+
+  /* HORIZONTAL TRACK */
+  .section-slider {
+    position: relative;
+
+    display: flex;
+    flex: 1 1 auto;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+
+    height: calc(100dvh - 68px);
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    scroll-snap-type: y proximity;
-    scroll-padding-top: 20px;
-    scroll-padding-bottom: 90px;
+    scroll-padding-inline: 0;
+
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+
+    scrollbar-width: none;
   }
 
-  .page-section {
+  .section-slider::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* EACH SLIDE */
+  .slide-panel {
+    position: relative;
+
+    flex: 0 0 100%;
+
+    width: 100%;
+    min-width: 100%;
+    height: 100%;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
     scroll-snap-align: start;
-    scroll-snap-stop: normal;
-    scroll-margin-top: 20px;
+    scroll-snap-stop: always;
+
+    overscroll-behavior-y: contain;
+
+    scrollbar-width: thin;
+    scrollbar-color: #829C89 transparent;
   }
 
+  .slide-panel > .page-section {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+
+    scroll-snap-align: none;
+
+    padding-bottom: 110px;
+  }
+
+  /* HOME SLIDE */
+  .slide-panel[data-section-id="home"] .hero-section {
+    min-height: 100%;
+  }
+
+  /* NAVIGATION DOCK */
+  .side-navigation {
+    position: fixed !important;
+
+    top: auto !important;
+    left: 50% !important;
+
+    bottom: calc(
+      env(safe-area-inset-bottom, 0px) + 14px
+    ) !important;
+
+    display: flex;
+    flex-direction: row;
+
+    gap: 4px;
+    padding: 6px;
+
+    max-width: calc(100vw - 24px);
+
+    transform: translateX(-50%) !important;
+
+    z-index: 999999;
+
+    background: rgba(233, 236, 231, 0.97);
+
+    border: 1px solid rgba(40, 55, 45, 0.1);
+
+    border-radius: 14px;
+
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+  }
+
+  .side-nav-item {
+    flex: 0 0 auto;
+
+    width: clamp(35px, 7vw, 42px);
+    height: 39px;
+  }
+
+  .side-nav-item small {
+    display: none;
+  }
+
+  /* CONTENT SPACING */
   .projects-section,
   .writing-section {
-    scroll-snap-align: start;
-    scroll-snap-stop: normal;
+    scroll-margin-top: 0;
+  }
+
+  /* FOOTER */
+  .site-footer {
+    padding-bottom: 115px;
   }
 }
 
-/* DESKTOP NORMAL SCROLL */
+/* SMALL MOBILE */
+@media (max-width: 420px) {
+  .topbar {
+    padding-inline: 16px;
+  }
 
+  .side-navigation {
+    gap: 2px;
+    padding: 5px;
+  }
+
+  .side-nav-item {
+    width: 35px;
+    height: 36px;
+  }
+}
+
+/* DESKTOP: NORMAL VERTICAL LAYOUT */
 @media (min-width: 1025px) {
-  html {
+
+  html,
+  body,
+  #root {
+    height: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .app-shell {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .portfolio-frame {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .portfolio-content {
+    height: auto;
+    display: block;
+  }
+
+  .section-slider {
+    display: block;
+    height: auto;
+    overflow: visible;
     scroll-snap-type: none;
   }
 
-  .page-section {
+  .slide-panel {
+    display: block;
+
+    width: 100%;
+    min-width: 0;
+    height: auto;
+
+    overflow: visible;
     scroll-snap-align: none;
   }
 }
 
 /* REDUCED MOTION */
-
 @media (prefers-reduced-motion: reduce) {
-  html {
+  .section-slider {
     scroll-behavior: auto;
     scroll-snap-type: none;
   }
