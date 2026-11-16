@@ -1909,3 +1909,46 @@ video {
     will-change: auto;
   }
 }
+/* TABLET & MOBILE FULL PAGE SCROLL */
+
+@media (max-width: 1024px) {
+  html {
+    scroll-behavior: smooth;
+    scroll-snap-type: y proximity;
+    scroll-padding-top: 20px;
+    scroll-padding-bottom: 90px;
+  }
+
+  .page-section {
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+    scroll-margin-top: 20px;
+  }
+
+  .projects-section,
+  .writing-section {
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+  }
+}
+
+/* DESKTOP NORMAL SCROLL */
+
+@media (min-width: 1025px) {
+  html {
+    scroll-snap-type: none;
+  }
+
+  .page-section {
+    scroll-snap-align: none;
+  }
+}
+
+/* REDUCED MOTION */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+    scroll-snap-type: none;
+  }
+}
